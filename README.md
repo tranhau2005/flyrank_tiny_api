@@ -1,78 +1,78 @@
 # FlyRank Tiny Task API
 
-Một REST API quản lý công việc (task) đơn giản, được xây dựng bằng FastAPI và Pydantic. API hỗ trợ đầy đủ các thao tác tạo, đọc, cập nhật và xóa (CRUD), kèm kiểm tra dữ liệu đầu vào và tài liệu tương tác tự động.
+A simple REST API for managing tasks, built with FastAPI and Pydantic. It supports full create, read, update, and delete (CRUD) operations, input validation, and automatically generated interactive documentation.
 
-## Tính năng
+## Features
 
-- Lấy danh sách hoặc chi tiết một task.
-- Tạo task mới với tiêu đề bắt buộc.
-- Cập nhật tiêu đề hoặc trạng thái hoàn thành của task.
-- Xóa task theo ID.
-- Trả về lỗi `400` khi dữ liệu không hợp lệ và `404` khi không tìm thấy task.
-- Cung cấp Swagger UI và ReDoc tự động.
+- Retrieve all tasks or a single task by ID.
+- Create tasks with a required title.
+- Update a task's title or completion status.
+- Delete tasks by ID.
+- Return `400` for invalid data and `404` when a task cannot be found.
+- Provide automatic Swagger UI and ReDoc documentation.
 
 > [!NOTE]
-> Dữ liệu hiện được lưu trong bộ nhớ. Mọi thay đổi sẽ mất và danh sách task mẫu sẽ được khôi phục khi server khởi động lại.
+> Data is currently stored in memory. All changes are lost and the initial sample tasks are restored whenever the server restarts.
 
-## Yêu cầu
+## Requirements
 
-- Python 3.10 trở lên
+- Python 3.10 or later
 - `pip`
 
-## Cài đặt
+## Installation
 
-Clone repository và di chuyển vào thư mục dự án:
+Clone the repository and enter the project directory:
 
 ```bash
 git clone https://github.com/tranhau2005/flyrank_tiny_api.git
 cd flyrank_tiny_api
 ```
 
-Tạo và kích hoạt môi trường ảo:
+Create and activate a virtual environment:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-Trên Windows, kích hoạt môi trường ảo bằng lệnh:
+On Windows, activate the virtual environment with:
 
 ```powershell
 .venv\Scripts\activate
 ```
 
-Cài đặt các thư viện cần thiết:
+Install the required dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Chạy ứng dụng
+## Running the application
 
 ```bash
 uvicorn main:app --reload --port 8000
 ```
 
-Server mặc định chạy tại `http://127.0.0.1:8000`.
+The server runs at `http://127.0.0.1:8000` by default.
 
-Tài liệu API tương tác:
+Interactive API documentation is available at:
 
 - Swagger UI: `http://127.0.0.1:8000/docs`
 - ReDoc: `http://127.0.0.1:8000/redoc`
 
-## Các endpoint
+## API endpoints
 
-| Phương thức | Endpoint | Mô tả | Mã thành công |
+| Method | Endpoint | Description | Success status |
 | --- | --- | --- | --- |
-| `GET` | `/` | Thông tin cơ bản của API | `200` |
-| `GET` | `/health` | Kiểm tra trạng thái server | `200` |
-| `GET` | `/tasks` | Lấy tất cả task | `200` |
-| `GET` | `/tasks/{id}` | Lấy một task theo ID | `200` |
-| `POST` | `/tasks` | Tạo task mới | `201` |
-| `PUT` | `/tasks/{id}` | Cập nhật một hoặc nhiều trường của task | `200` |
-| `DELETE` | `/tasks/{id}` | Xóa task theo ID | `204` |
+| `GET` | `/` | Return basic API information | `200` |
+| `GET` | `/health` | Check the server status | `200` |
+| `GET` | `/tasks` | Return all tasks | `200` |
+| `GET` | `/tasks/{id}` | Return a task by ID | `200` |
+| `POST` | `/tasks` | Create a task | `201` |
+| `PUT` | `/tasks/{id}` | Update one or more task fields | `200` |
+| `DELETE` | `/tasks/{id}` | Delete a task by ID | `204` |
 
-Mỗi task có cấu trúc:
+Each task has the following structure:
 
 ```json
 {
@@ -82,21 +82,21 @@ Mỗi task có cấu trúc:
 }
 ```
 
-## Ví dụ sử dụng
+## Usage examples
 
-### Lấy danh sách task
+### Retrieve all tasks
 
 ```bash
 curl http://127.0.0.1:8000/tasks
 ```
 
-### Lấy task theo ID
+### Retrieve a task by ID
 
 ```bash
 curl http://127.0.0.1:8000/tasks/1
 ```
 
-Nếu ID không tồn tại, API trả về `404`:
+If the ID does not exist, the API returns `404`:
 
 ```json
 {
@@ -104,7 +104,7 @@ Nếu ID không tồn tại, API trả về `404`:
 }
 ```
 
-### Tạo task mới
+### Create a task
 
 ```bash
 curl -X POST http://127.0.0.1:8000/tasks \
@@ -112,7 +112,7 @@ curl -X POST http://127.0.0.1:8000/tasks \
   -d '{"title":"Write project documentation"}'
 ```
 
-Kết quả:
+Response:
 
 ```json
 {
@@ -122,11 +122,11 @@ Kết quả:
 }
 ```
 
-`title` không được để trống. Khoảng trắng ở đầu và cuối tiêu đề sẽ được loại bỏ.
+The `title` field cannot be empty. Leading and trailing whitespace is removed before the task is stored.
 
-### Cập nhật task
+### Update a task
 
-Có thể gửi `title`, `done` hoặc cả hai trường:
+The request may include `title`, `done`, or both fields:
 
 ```bash
 curl -X PUT http://127.0.0.1:8000/tasks/4 \
@@ -134,23 +134,23 @@ curl -X PUT http://127.0.0.1:8000/tasks/4 \
   -d '{"title":"Finish project documentation","done":true}'
 ```
 
-Request phải chứa ít nhất một trường. `title` không được rỗng và `done` không được là `null` hoặc chuỗi rỗng.
+The request must contain at least one field. `title` cannot be empty, and `done` cannot be `null` or an empty string.
 
-### Xóa task
+### Delete a task
 
 ```bash
 curl -X DELETE http://127.0.0.1:8000/tasks/4
 ```
 
-Khi xóa thành công, API trả về `204 No Content` và không có response body.
+After a successful deletion, the API returns `204 No Content` with an empty response body.
 
-### Kiểm tra server
+### Check the server status
 
 ```bash
 curl http://127.0.0.1:8000/health
 ```
 
-Kết quả:
+Response:
 
 ```json
 {
@@ -158,11 +158,11 @@ Kết quả:
 }
 ```
 
-## Cấu trúc dự án
+## Project structure
 
 ```text
 flyrank_tiny_api/
-├── main.py           # Khai báo ứng dụng, schema và các endpoint
-├── requirements.txt  # Danh sách thư viện Python
-└── README.md          # Tài liệu dự án
+├── main.py           # Application, schemas, and API endpoints
+├── requirements.txt  # Python dependencies
+└── README.md          # Project documentation
 ```
