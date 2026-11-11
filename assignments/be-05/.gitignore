@@ -1,0 +1,5 @@
+cache/
+.venv/
+__pycache__/
+output/errors.json
+output/run-report.json

@@ -166,3 +166,18 @@ flyrank_tiny_api/
 ├── requirements.txt  # Python dependencies
 └── README.md          # Project documentation
 ```
+
+## Backend internship assignments
+
+The original task API is at the repository root. Subsequent work is organized by assignment code:
+
+- [BE-02 — SQLite task API](assignments/be-02/README.md)
+- [BE-04 — PostgreSQL and Docker Compose](assignments/be-04/README.md)
+- [BE-03 — Supabase authentication](assignments/be-03/README.md)
+- [BE-05 — polite scraper](assignments/be-05/README.md)
+- [BE-07 — structured AI triage](assignments/be-07/README.md)
+- [BE-06 — Inngest background jobs](assignments/be-06/README.md)
+- [BE-08 — PDF reports](assignments/be-08/README.md)
+- [BE-09 — visual decision flow](assignments/be-09/README.md)
+
+Each README records the validation performed and any remaining external-service or Docker checks. The capstone is maintained separately, as required by the capstone brief.
