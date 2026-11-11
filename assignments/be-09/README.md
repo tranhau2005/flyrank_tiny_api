@@ -14,4 +14,4 @@ Open `http://localhost:3000`. The default provider is Groq's OpenAI-compatible e
 
 The production build and browser interactions (add node, edit prompt, save) were checked locally. Inngest receives run events. Real model traversal remains pending provider credentials; do not represent it as verified until an actual run completes.
 
-The Next.js PostCSS dependency is overridden to a patched 8.5 release and the production build was checked again. As of 2026-11-11, `npm audit --omit=dev` still reports seven vulnerable dependency entries, including the Zod version used by Inngest. This demo should remain local until the remaining advisories are resolved and the application is tested again.
+Next.js's PostCSS dependency is overridden to a patched 8.5 release, and the `gcp-metadata` dependency uses a patched gaxios 7 release; the production build was checked again. As of 2026-11-11, `npm audit --omit=dev` still reports two high-severity vulnerable dependency entries, Inngest and its Zod dependency. This demo should remain local until the remaining advisories are resolved and the application is tested again.
